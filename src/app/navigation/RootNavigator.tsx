@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import GhagavadGeethaNavigation from '../../features/ghagavad-geetha/navigation/GhagavadGeethaNavigation';
+import GhagavadGeethaNavigation from '../../features/bhagavad-gita/navigation/GhagavadGeethaNavigation';
 
 const RootNavigator = () => {
   return (
