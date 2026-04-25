@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
-import { Chapter } from '../types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Chapter, Verse } from '../types';
 import { VERSES } from '../data/verses';
 import VerseCard from '../components/VerseCard';
 import { verticalScale, moderateScale, scale } from '@src/utils/scalingUI';
@@ -15,12 +16,15 @@ import StatusBarCover from '@src/components/layout/StatusBarCover';
 
 type RootStackParamList = {
   ChapterVerses: { chapter: Chapter };
+  VerseDetail: { verse: Verse };
 };
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 type ChapterVersesRouteProp = RouteProp<RootStackParamList, 'ChapterVerses'>;
 
 const ChapterVersesScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
   const route = useRoute<ChapterVersesRouteProp>();
   const { chapter } = route.params;
 
@@ -49,7 +53,9 @@ const ChapterVersesScreen = () => {
           <VerseCard
             verse={item}
             onPress={() => {
-              // Navigate to verse details if needed later
+              navigation.navigate('VerseDetail', {
+                verse: item,
+              });
             }}
           />
         )}
@@ -66,7 +72,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAF9F6',
   },
   statusBar: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'transparent',
   },
   header: {
     height: verticalScale(56),

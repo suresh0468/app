@@ -4,8 +4,9 @@ export interface Verse {
   verseNumber: number;
   text: string;
   transliteration?: string;
-  meaning?: string;
-  wordMeanings?: string;
+  meaning: string;
+  explanation: string;
+  images: any[];
 }
 
 export interface Chapter {
