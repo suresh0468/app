@@ -33,7 +33,7 @@ const GhagavadGeethaScreen = () => {
       <View style={styles.container}>
         <StatusBarCover style={styles.statusBar} />
         <View style={styles.topBar}>
-          <Text style={styles.topBarTitle}>Bhagavad Gita</Text>
+          <Text style={styles.topBarTitle}>శ్రీమద్భగవద్గీత</Text>
         </View>
 
         <FlatList

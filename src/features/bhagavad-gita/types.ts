@@ -1,6 +1,7 @@
 export interface Chapter {
   id: number;
-  titleSanskrit: string;
-  titleEnglish: string;
+  title: string;
+  subTitle: string;
   description: string;
+  image?: any;
 }

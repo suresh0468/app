@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import { Chapter } from '../types';
 import { scale, verticalScale, moderateScale } from '@src/utils/scalingUI';
 
@@ -11,12 +17,17 @@ interface ChapterCardProps {
 const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, onPress }) => {
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.7}>
+      <ImageBackground
+        source={chapter.image}
+        resizeMode="cover"
+        style={[styles.imageBackground, StyleSheet.absoluteFill]}
+      />
       <View style={styles.numberContainer}>
         <Text style={styles.numberText}>{chapter.id}</Text>
       </View>
       <View style={styles.contentContainer}>
-        <Text style={styles.titleSanskrit}>{chapter.titleSanskrit}</Text>
-        <Text style={styles.titleEnglish}>{chapter.titleEnglish}</Text>
+        <Text style={styles.titleSanskrit}>{chapter.title}</Text>
+        <Text style={styles.titleEnglish}>{chapter.subTitle}</Text>
         <Text style={styles.description} numberOfLines={2}>
           {chapter.description}
         </Text>
@@ -39,6 +50,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: moderateScale(4),
     elevation: 3,
+    overflow: 'hidden',
+  },
+  imageBackground: {
+    position: 'absolute',
+    opacity: 0.5,
   },
   numberContainer: {
     width: scale(48),
