@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Chapter } from '../types';
 import { scale, verticalScale, moderateScale } from '@src/utils/scalingUI';
+import { useNavigation } from '@react-navigation/native';
 
 interface ChapterCardProps {
   chapter: Chapter;
@@ -15,8 +16,22 @@ interface ChapterCardProps {
 }
 
 const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, onPress }) => {
+  const navigation = useNavigation<any>();
+
+  const handlePress = () => {
+    if (onPress) {
+      onPress();
+    } else {
+      navigation.navigate('ChapterVerses', { chapter });
+    }
+  };
+
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.7}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={handlePress}
+      activeOpacity={0.7}
+    >
       <ImageBackground
         source={chapter.image}
         resizeMode="cover"
