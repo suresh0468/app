@@ -14,6 +14,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Verse } from '../types';
 import { scale, verticalScale, moderateScale } from '@src/utils/scalingUI';
 import StatusBarCover from '@src/components/layout/StatusBarCover';
+import Tts from 'react-native-tts';
+
+// Initialize TTS
+Tts.setDefaultLanguage('te-IN');
+Tts.setDefaultRate(1, true); // Slower rate for clarity in spiritual verses
 
 type RootStackParamList = {
   VerseDetail: { verse: Verse };
@@ -58,6 +63,18 @@ const VerseDetailScreen = () => {
 
   const getImageSource = (img: any) => {
     return typeof img === 'string' ? { uri: img } : img;
+  };
+
+  // TTS cleanup
+  useEffect(() => {
+    return () => {
+      Tts.stop();
+    };
+  }, []);
+
+  const handleSpeak = (text: string) => {
+    Tts.stop();
+    Tts.speak(text);
   };
 
   const onShare = async () => {
@@ -112,7 +129,15 @@ const VerseDetailScreen = () => {
       >
         {/* Sloka Section */}
         <View style={styles.slokaSection}>
-          <Text style={styles.slokaText}>{verse.text}</Text>
+          <View style={styles.sectionHeaderRow}>
+            <Text style={styles.slokaText}>{verse.text}</Text>
+            <TouchableOpacity
+              onPress={() => handleSpeak(verse.text)}
+              style={styles.playButton}
+            >
+              <Text style={styles.playIcon}>🔊</Text>
+            </TouchableOpacity>
+          </View>
           {verse.transliteration && (
             <Text style={styles.transliterationText}>
               {verse.transliteration}
@@ -124,10 +149,18 @@ const VerseDetailScreen = () => {
         {/* Meaning Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <View style={styles.iconCircle}>
-              <Text style={styles.sectionIcon}>💡</Text>
+            <View style={styles.sectionHeaderTitleRow}>
+              <View style={styles.iconCircle}>
+                <Text style={styles.sectionIcon}>💡</Text>
+              </View>
+              <Text style={styles.sectionTitle}>సరళ భావం • SIMPLE MEANING</Text>
             </View>
-            <Text style={styles.sectionTitle}>సరళ భావం • SIMPLE MEANING</Text>
+            <TouchableOpacity
+              onPress={() => handleSpeak(verse.meaning)}
+              style={styles.playButtonSmall}
+            >
+              <Text style={styles.playIconSmall}>🔊</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.meaningCard}>
             <Text style={styles.meaningText}>{verse.meaning}</Text>
@@ -137,12 +170,20 @@ const VerseDetailScreen = () => {
         {/* Explanation Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <View style={styles.iconCircle}>
-              <Text style={styles.sectionIcon}>📖</Text>
+            <View style={styles.sectionHeaderTitleRow}>
+              <View style={styles.iconCircle}>
+                <Text style={styles.sectionIcon}>📖</Text>
+              </View>
+              <Text style={styles.sectionTitle}>
+                తాత్పర్యం / వ్యాఖ్యానం • EXPLANATION
+              </Text>
             </View>
-            <Text style={styles.sectionTitle}>
-              తాత్పర్యం / వ్యాఖ్యానం • EXPLANATION
-            </Text>
+            <TouchableOpacity
+              onPress={() => handleSpeak(verse.explanation)}
+              style={styles.playButtonSmall}
+            >
+              <Text style={styles.playIconSmall}>🔊</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.explanationCard}>
             <Text style={styles.explanationText}>{verse.explanation}</Text>
@@ -232,7 +273,32 @@ const styles = StyleSheet.create({
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: verticalScale(12),
+  },
+  sectionHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    paddingHorizontal: scale(20),
+  },
+  sectionHeaderTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  playButton: {
+    padding: moderateScale(8),
+    marginLeft: scale(8),
+  },
+  playButtonSmall: {
+    padding: moderateScale(4),
+  },
+  playIcon: {
+    fontSize: moderateScale(20),
+  },
+  playIconSmall: {
+    fontSize: moderateScale(16),
   },
   iconCircle: {
     width: moderateScale(32),

@@ -13,21 +13,6 @@ import StatusBarCover from '@src/components/layout/StatusBarCover';
 import NavBarCover from '@src/components/layout/NavBarCover';
 
 const GhagavadGeethaScreen = () => {
-  const renderHeader = () => (
-    <View style={styles.headerContainer}>
-      <ImageBackground
-        source={require('../../../assets/header.png')}
-        style={styles.heroImage}
-        imageStyle={{ borderRadius: moderateScale(16) }}
-      >
-        <View style={styles.overlay}>
-          <Text style={styles.heroSubtitle}>SACRED TEXT</Text>
-          <Text style={styles.heroTitle}>The 18 Chapters</Text>
-        </View>
-      </ImageBackground>
-    </View>
-  );
-
   return (
     <>
       <View style={styles.container}>
@@ -41,7 +26,6 @@ const GhagavadGeethaScreen = () => {
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => <ChapterCard chapter={item} />}
           contentContainerStyle={styles.listContent}
-          ListHeaderComponent={renderHeader}
           showsVerticalScrollIndicator={false}
         />
         <NavBarCover />
@@ -73,31 +57,6 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     padding: moderateScale(16),
-  },
-  heroImage: {
-    height: verticalScale(180),
-    width: '100%',
-    justifyContent: 'flex-end',
-    overflow: 'hidden',
-  },
-  overlay: {
-    padding: moderateScale(20),
-    backgroundColor: 'rgba(0,0,0,0.3)',
-    borderRadius: moderateScale(16),
-    height: '100%',
-    justifyContent: 'flex-end',
-  },
-  heroSubtitle: {
-    color: '#E0E0E0',
-    fontSize: moderateScale(12),
-    fontWeight: 'bold',
-    letterSpacing: 1.5,
-    marginBottom: verticalScale(4),
-  },
-  heroTitle: {
-    color: '#FFFFFF',
-    fontSize: moderateScale(28),
-    fontWeight: 'bold',
   },
   listContent: {
     paddingBottom: verticalScale(24),
